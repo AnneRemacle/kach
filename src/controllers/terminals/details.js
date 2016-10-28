@@ -2,7 +2,7 @@
  *
  * /src/controllers/terminals/details.js - Controller for terminal details
  *
- * coded by lAnne
+ * coded by Anne
  * started at 28/10/2016
  */
 
