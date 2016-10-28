@@ -5,10 +5,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (oRequest, oResponse) {
-	var sTerminalID = (oRequest.params.id || "").trim();
+	var sTerminalID = (oRequest.params.id || "").trim(),
+	    iLatitude = +oRequest.query.latitude,
+	    iLongitude = +oRequest.query.longitude,
+	    // + est équivalent à faire parseInt en base 10
+	oCurrentPosition = void 0;
 
 	if (sTerminalID) {
 		(0, _api.error)(oRequest, oResponse, "Invalid ID!", 400);
+	}
+
+	if (!isNaN(iLatitude) && !isNaN(iLongitude)) {
+		oCurrentPosition = {
+			"latitude": iLatitude,
+			"longitude": iLongitude
+		};
 	}
 
 	(0, _terminals2.default)().findOne({
@@ -52,6 +63,11 @@ exports.default = function (oRequest, oResponse) {
 			bank: bank, latitude: latitude, longitude: longitude, address: address
 		};
 
+		if (oCurrentPosition) {
+			// TODO: compute distance
+			oCleanTerminal.distance = (0, _jeyoDistans2.default)(oCurrentPosition, oCleanTerminal) * 1000;
+		}
+
 		(0, _api.send)(oRequest, oResponse, oTerminal, oCleanTerminal);
 	}).catch(function (oError) {
 		return (0, _api.error)(oRequest, oResponse, oError);
@@ -63,5 +79,11 @@ var _terminals = require("../../models/terminals");
 var _terminals2 = _interopRequireDefault(_terminals);
 
 var _api = require("../../core/utils/api");
+
+var _mongodb = require("mongodb");
+
+var _jeyoDistans = require("jeyo-distans");
+
+var _jeyoDistans2 = _interopRequireDefault(_jeyoDistans);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

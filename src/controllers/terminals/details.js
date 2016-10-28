@@ -8,12 +8,24 @@
 
 import getTerminals from "../../models/terminals";
 import { send, error } from "../../core/utils/api";
+import { objectID } from "mongodb";
+import distance from "jeyo-distans";
 
 export default function ( oRequest, oResponse ) {
-	let sTerminalID = ( oRequest.params.id || "" ).trim();
+	let sTerminalID = ( oRequest.params.id || "" ).trim(),
+		iLatitude = +oRequest.query.latitude,
+		iLongitude = +oRequest.query.longitude, // + est équivalent à faire parseInt en base 10
+		oCurrentPosition;
 
 	if ( sTerminalID ) {
 		error( oRequest, oResponse, "Invalid ID!", 400 );
+	}
+
+	if ( !isNaN( iLatitude ) && !isNaN( iLongitude ) ) {
+		oCurrentPosition = {
+			"latitude": iLatitude,
+			"longitude": iLongitude,
+		};
 	}
 
 	getTerminals()
@@ -49,6 +61,11 @@ export default function ( oRequest, oResponse ) {
 				"_id": oTerminal.id,
 				"empty": !!empty, // !! force un booléen
 				bank, latitude, longitude, address, 
+			};
+
+			if ( oCurrentPosition ) {
+				// TODO: compute distance
+				oCleanTerminal.distance = distance( oCurrentPosition, oCleanTerminal ) * 1000;
 			}
 
 			send( oRequest, oResponse, oTerminal, oCleanTerminal );
