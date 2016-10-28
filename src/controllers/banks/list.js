@@ -13,7 +13,7 @@ export default function( oRequest, oResponse ) {
 
     let sCountryCode = ( oRequest.query.country || "" ).toUpperCase();
 
-    if ( !sCoutryCode ) {
+    if ( !sCountryCode ) {
         error( oRequest, oResponse, "Mandoatory country query params not found!", 400 );
     }
 
