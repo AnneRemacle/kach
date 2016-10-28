@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _express = require("express");
 
+var _list = require("../controllers/terminals/list");
+
+var _list2 = _interopRequireDefault(_list);
+
 var _details = require("../controllers/terminals/details");
 
 var _details2 = _interopRequireDefault(_details);
@@ -16,20 +20,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // import update from "../controllers/terminals/update";
 // import destroy from "../controllers/terminals/destroy";
 
-/* anne/hepl/ria/kach
- *
- * /src/routes/terminals.js - API Routes for terminals
- *
- * coded by lAnne
- * started at 28/10/2016
- */
+var oRouter = new _express.Router(); /* anne/hepl/ria/kach
+                                      *
+                                      * /src/routes/terminals.js - API Routes for terminals
+                                      *
+                                      * coded by Anne
+                                      * started at 28/10/2016
+                                      */
 
-var oRouter = new _express.Router();
-
-//oRouter.get(  "/terminals", list );
-
-
-// import list from "../controllers/terminals/list";
+oRouter.get("/terminals", _list2.default);
 oRouter.get("/terminals/:id", _details2.default);
 //oRouter.post(  "/terminals", create );
 //oRouter.patch(  "/terminals", update );
