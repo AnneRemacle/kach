@@ -47,7 +47,8 @@ exports.default = function (oRequest, oResponse) {
         var aTerminals = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
 
-        var aCleanedTerminals = void 0;
+        var aCleanedTerminals = void 0,
+            aTerminalsToReset = void 0;
 
         // 1. Compute distances
         // 3. Clean useless properties
@@ -58,12 +59,27 @@ exports.default = function (oRequest, oResponse) {
             var longitude = _ref.longitude;
             var address = _ref.address;
             var empty = _ref.empty;
+            var updated_at = _ref.updated_at;
+
+            var bEmptyState = empty;
+
+            if (Date.now() - new Date(updated_at).getTime() > 24 * 3600 * 1000 && bEmptyState) {
+                empty = false;
+                aTerminalsToReset.push(_id);
+            }
+
             return {
                 "id": _id,
-                "empty": !!empty,
+                "empty": bEmptyState,
                 "distance": (0, _jeyoDistans2.default)(oCurrentPosition, { latitude: latitude, longitude: longitude }) * 1000,
                 bank: bank, latitude: latitude, longitude: longitude, address: address
             };
+        });
+
+        (0, _terminals2.default)().update({
+            "_id": { $in: aTerminalsToReset }
+        }, {
+            "$et": { "empty": false, "updated_at": new Date() }
         });
         // 2. Sort by distances
         aCleanedTerminals.sort(function (oTerminalOne, oTerminalTwo) {
