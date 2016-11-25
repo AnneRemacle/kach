@@ -1,71 +1,53 @@
-/* anne/hepl/ria/kach
+/* ria/kach
  *
  * /src/controllers/terminals/details.js - Controller for terminal details
  *
- * coded by Anne
+ * Coded by Mucht - Mathieu Claessens
  * started at 28/10/2016
- */
+*/
 
 import getTerminals from "../../models/terminals";
 import { send, error } from "../../core/utils/api";
-import { objectID } from "mongodb";
+import { ObjectID } from "mongodb";
 import distance from "jeyo-distans";
-
 import checkPosition from "../../core/utils/position";
 
-export default function ( oRequest, oResponse ) {
-	let sTerminalID = ( oRequest.params.id || "" ).trim(),
-		oCurrentPosition;
+export default function( oRequest, oResponse ) {
 
-	if ( sTerminalID ) {
-		error( oRequest, oResponse, "Invalid ID!", 400 );
-	}
+    let sTerminalID = ( oRequest.params.id || "" ).trim(),
+        oCurrentPosition;
 
-	oCurrentPosition = checkPosition( +oRequest.query.latitude, +oRequest.query.longitude );
+    if ( !sTerminalID ) {
+        error( oRequest, oResponse, "Invalid ID", 400 );
+    }
 
-	getTerminals()
-		.findOne( {
-			"_id": new ObjectID( sTerminalID ), // plus propre de mettre new, mais on pourrait ne pas le mettre
-			"deleted_at": null,
-		} )
-		// .then( ( oTerminal ) => {
+    oCurrentPosition = checkPosition( +oRequest.query.latitude, +oRequest.query.longitude );
 
-		// 	let oCleanTerminal;
+    getTerminals()
+        .findOne( {
+            "_id": new ObjectID( sTerminalID ),
+            "deleted_at": null,
+        } )
+        .then( ( oTerminal ) => {
 
-		// 	if ( !oTerminal ) {
-		// 		return error( oRequest, oResponse, "Unknown terminal", 404 );
-		// 	}
+            if ( !oTerminal ) {
+                return error( oRequest, oResponse, "Unknown Terminal", 404 );
+            }
 
-		// 	oCleanTerminal = {
-		// 		"_id": oTerminal.id,
-		// 		"bank": oTerminal.bank,
-		// 		"latitude": oTerminal.latitude,
-		// 		"longitude": oTerminal.longitude,
-		// 		"empty": !!oTerminal.empty,
-		// 	}
+            let { _id, bank, latitude, longitude, address, empty } = oTerminal,
+                oCleanedTerminal;
 
-		.then( ( { _id, bank, latitude, longitude, address, empty } ) => {
+            oCleanedTerminal = {
+                "id": _id,
+                "empty": !!empty,
+                bank, latitude, longitude, address,
+            };
 
-			let oCleanTerminal;
+            if ( oCurrentPosition ) {
+                oCleanedTerminal.distance = distance( oCurrentPosition, oCleanedTerminal ) * 1000;
+            }
 
-			if ( !_id ) {
-				return error( oRequest, oResponse, "Unknown terminal", 404 );
-			}
-
-			oCleanTerminal = {
-				"_id": oTerminal.id,
-				"empty": !!empty, // !! force un booléen
-				bank, latitude, longitude, address, 
-			};
-
-			if ( oCurrentPosition ) {
-				// TODO: compute distance
-				oCleanTerminal.distance = distance( oCurrentPosition, oCleanTerminal ) * 1000;
-			}
-
-			send( oRequest, oResponse, oTerminal, oCleanTerminal );
-		} )
-		.catch( ( oError ) => error( oRequest, oResponse, oError ) );
+            send( oRequest, oResponse, oCleanedTerminal );
+        } )
+        .catch( ( oError ) => error( oRequest, oResponse, oError ) );
 }
-
-/* on donne une fonction à then et cette fonction sera appelée après que findOne sera terminé */

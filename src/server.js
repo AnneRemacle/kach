@@ -1,10 +1,10 @@
-/* leny/kach
+/* ria/kach
  *
  * /src/server.js - main entry point
  *
- * coded by leny@flatLand!
- * started at 21/10/2016
- */
+ * Coded by Mucht - Mathieu Claessens
+ * started at 21/10/2015
+*/
 
 import { init as initDB } from "./core/mongodb";
 import { init as initExpress } from "./core/express";

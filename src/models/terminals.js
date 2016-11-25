@@ -1,10 +1,10 @@
-/* leny/kach
+/* ria/kach
  *
  * /src/models/terminals.js - Model for terminals
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
 import { db } from "../core/mongodb";
 

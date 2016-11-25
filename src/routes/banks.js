@@ -1,13 +1,13 @@
-/* leny/kach
+/* ria/kach
  *
  * /src/routes/banks.js - API Routes for banks
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
 import { Router } from "express";
-import listBanksController from "../controllers/banks/list";
+import listBanksController from "../controllers/banks/list.js"
 
 let oRouter = new Router();
 

@@ -1,10 +1,10 @@
-/* leny/kach
+/* ria/kach
  *
- * /src/core/mongodb.js - Connector for MongoDB
+ * /src/core/mongodb.js - Connector for mongodb
  *
- * coded by leny@flatLand!
- * started at date
- */
+ * Coded by Mucht - Mathieu Claessens
+ * started at 21/10/2016
+*/
 
 import { MongoClient } from "mongodb";
 import Promise from "bluebird";
@@ -12,7 +12,8 @@ import zouti from "zouti";
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/kach";
 
-let oDB, fInit;
+let oDB,
+    fInit;
 
 fInit = function() {
     return new Promise( ( fResolve, fReject ) => {
@@ -20,7 +21,6 @@ fInit = function() {
             if ( oError ) {
                 return fReject( oError );
             }
-
             zouti.success( "Connected to DB", "kach" );
             fResolve( oDB = oLinkedDB );
         } );

@@ -1,13 +1,13 @@
-/* leny/kach
+/* ria/kach
  *
  * /src/controllers/system/error.js - Controller for system error
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
-import { error } from "../../core/utils/api";
+import { send } from "../../core/utils/api";
 
 export default function( oRequest, oResponse ) {
-    error( oRequest, oResponse, { "message": "There's an error!" } );
+    send( oRequest, oResponse, { "message": "There is an error!" } );
 }

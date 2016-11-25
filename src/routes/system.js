@@ -1,16 +1,15 @@
-/* leny/kach
+/* ria/kach
  *
  * /src/routes/system.js - System routes
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
 import { Router } from "express";
-
-import sysPingController from "../controllers/system/ping";
-import sysEchoController from "../controllers/system/echo";
-import sysErrorController from "../controllers/system/error";
+import sysPingController from "../controllers/system/ping.js";
+import sysEchoController from "../controllers/system/echo.js";
+import sysErrorController from "../controllers/system/error.js";
 
 let oRouter = new Router();
 

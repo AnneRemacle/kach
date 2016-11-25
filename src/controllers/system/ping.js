@@ -1,10 +1,10 @@
-/* leny/kach
+/* ria/kach
  *
- * /src/controllers/system/ping.js - Controller for system ping
+ * /src/controllers/ping.js - Controller for system ping
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
 import { send } from "../../core/utils/api";
 
