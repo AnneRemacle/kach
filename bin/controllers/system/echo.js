@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (oRequest, oResponse) {
-  var sEcho = oRequest.query.echo || "hello, world!";
+  var sEcho = oRequest.query.echo || "Hello, world!";
 
   (0, _api.send)(oRequest, oResponse, sEcho);
 };

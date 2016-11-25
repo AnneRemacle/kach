@@ -3,13 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-/* leny/kach
+/* ria/kach
  *
- * /src/core/utils/api.js - API utils
+ * /src/core/utils/ipa.js - API utils
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
 var fSend = void 0,
     fError = void 0;
@@ -26,14 +26,14 @@ exports.send = fSend = function fSend(oRequest, oResponse) {
     });
 };
 
-exports.error = fError = function fError(oRequest, oResponse, oError) {
+exports.error = fError = function fError(oRequest, oResponse, mError) {
     var iStatus = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 500;
 
     oResponse.status(iStatus).json({
         "url": "[" + oRequest.method + "] " + oRequest.url,
         "timestamp": Date.now(),
         "data": null,
-        "error": oError
+        "error": mError instanceof Error ? mError.message : mError
     });
 };
 

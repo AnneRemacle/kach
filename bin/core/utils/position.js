@@ -1,25 +1,27 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 exports.default = function (iLatitude, iLongitude) {
 
-	if (isNaN(iLatitude) || isNaN(iLongitude)) {
-		return false;
-	}
+    var oPosition = void 0;
 
-	if (iLatitude < -90 || iLatitude > 90) {
-		return false;
-	}
+    if (isNaN(iLatitude) || isNaN(iLongitude)) {
+        return false;
+    }
 
-	if (iLongitude < -180 || iLongitude > 180) {
-		return false;
-	}
+    if (iLatitude < -90 || iLatitude > 90) {
+        return false;
+    }
 
-	return {
-		"latitude": iLatitude,
-		"longitude": iLongitude
-	};
+    if (iLongitude < -180 || iLongitude > 180) {
+        return false;
+    }
+
+    return {
+        "latitude": iLatitude,
+        "longitude": iLongitude
+    };
 };

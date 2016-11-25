@@ -39,15 +39,15 @@ var _terminals2 = _interopRequireDefault(_terminals);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* leny/kach
+/* ria/kach
  *
  * /src/core/express.js - Express configuration
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
-var APP_PORT = 12345;
+var APP_PORT = "12345";
 
 var oApp = void 0,
     fInit = void 0;
@@ -61,7 +61,7 @@ exports.init = fInit = function fInit() {
 
     oApp = (0, _express2.default)();
 
-    // configure middlewares
+    // config middlewares
     oApp.use((0, _mitanEko2.default)("kach"));
     oApp.use((0, _responseTime2.default)());
     oApp.use(_bodyParser2.default.json());
@@ -74,9 +74,9 @@ exports.init = fInit = function fInit() {
     oApp.use(_banks2.default);
     oApp.use(_terminals2.default);
 
-    // listening
+    // Listening
     oApp.listen(iAppPort, function () {
-        _zouti2.default.success("Server is listening on " + iAppPort + ".", "kach");
+        _zouti2.default.success("Server is listening on " + iAppPort, "kach");
     });
 };
 

@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (oRequest, oResponse) {
-  (0, _api.error)(oRequest, oResponse, { "message": "There's an error!" });
+  (0, _api.send)(oRequest, oResponse, { "message": "There is an error!" });
 };
 
 var _api = require("../../core/utils/api");

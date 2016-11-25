@@ -6,27 +6,27 @@ Object.defineProperty(exports, "__esModule", {
 
 var _express = require("express");
 
-var _ping = require("../controllers/system/ping");
+var _ping = require("../controllers/system/ping.js");
 
 var _ping2 = _interopRequireDefault(_ping);
 
-var _echo = require("../controllers/system/echo");
+var _echo = require("../controllers/system/echo.js");
 
 var _echo2 = _interopRequireDefault(_echo);
 
-var _error = require("../controllers/system/error");
+var _error = require("../controllers/system/error.js");
 
 var _error2 = _interopRequireDefault(_error);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* leny/kach
+/* ria/kach
  *
  * /src/routes/system.js - System routes
  *
- * coded by leny@flatLand!
+ * Coded by Mucht - Mathieu Claessens
  * started at 21/10/2016
- */
+*/
 
 var oRouter = new _express.Router();
 

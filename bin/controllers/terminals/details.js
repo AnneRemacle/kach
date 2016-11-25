@@ -1,69 +1,51 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 exports.default = function (oRequest, oResponse) {
-	var sTerminalID = (oRequest.params.id || "").trim(),
-	    oCurrentPosition = void 0;
 
-	if (sTerminalID) {
-		(0, _api.error)(oRequest, oResponse, "Invalid ID!", 400);
-	}
+    var sTerminalID = (oRequest.params.id || "").trim(),
+        oCurrentPosition = void 0;
 
-	oCurrentPosition = (0, _position2.default)(+oRequest.query.latitude, +oRequest.query.longitude);
+    if (!sTerminalID) {
+        (0, _api.error)(oRequest, oResponse, "Invalid ID", 400);
+    }
 
-	(0, _terminals2.default)().findOne({
-		"_id": new ObjectID(sTerminalID), // plus propre de mettre new, mais on pourrait ne pas le mettre
-		"deleted_at": null
-	})
-	// .then( ( oTerminal ) => {
+    oCurrentPosition = (0, _position2.default)(+oRequest.query.latitude, +oRequest.query.longitude);
 
-	// 	let oCleanTerminal;
+    (0, _terminals2.default)().findOne({
+        "_id": new _mongodb.ObjectID(sTerminalID),
+        "deleted_at": null
+    }).then(function (oTerminal) {
 
-	// 	if ( !oTerminal ) {
-	// 		return error( oRequest, oResponse, "Unknown terminal", 404 );
-	// 	}
+        if (!oTerminal) {
+            return (0, _api.error)(oRequest, oResponse, "Unknown Terminal", 404);
+        }
 
-	// 	oCleanTerminal = {
-	// 		"_id": oTerminal.id,
-	// 		"bank": oTerminal.bank,
-	// 		"latitude": oTerminal.latitude,
-	// 		"longitude": oTerminal.longitude,
-	// 		"empty": !!oTerminal.empty,
-	// 	}
+        var _id = oTerminal._id;
+        var bank = oTerminal.bank;
+        var latitude = oTerminal.latitude;
+        var longitude = oTerminal.longitude;
+        var address = oTerminal.address;
+        var empty = oTerminal.empty;
+        var oCleanedTerminal = void 0;
 
-	.then(function (_ref) {
-		var _id = _ref._id;
-		var bank = _ref.bank;
-		var latitude = _ref.latitude;
-		var longitude = _ref.longitude;
-		var address = _ref.address;
-		var empty = _ref.empty;
+        oCleanedTerminal = {
+            "id": _id,
+            "empty": !!empty,
+            bank: bank, latitude: latitude, longitude: longitude, address: address
+        };
 
+        if (oCurrentPosition) {
+            oCleanedTerminal.distance = (0, _jeyoDistans2.default)(oCurrentPosition, oCleanedTerminal) * 1000;
+        }
 
-		var oCleanTerminal = void 0;
-
-		if (!_id) {
-			return (0, _api.error)(oRequest, oResponse, "Unknown terminal", 404);
-		}
-
-		oCleanTerminal = {
-			"_id": oTerminal.id,
-			"empty": !!empty, // !! force un booléen
-			bank: bank, latitude: latitude, longitude: longitude, address: address
-		};
-
-		if (oCurrentPosition) {
-			// TODO: compute distance
-			oCleanTerminal.distance = (0, _jeyoDistans2.default)(oCurrentPosition, oCleanTerminal) * 1000;
-		}
-
-		(0, _api.send)(oRequest, oResponse, oTerminal, oCleanTerminal);
-	}).catch(function (oError) {
-		return (0, _api.error)(oRequest, oResponse, oError);
-	});
+        (0, _api.send)(oRequest, oResponse, oCleanedTerminal);
+    }).catch(function (oError) {
+        return (0, _api.error)(oRequest, oResponse, oError);
+    });
 };
 
 var _terminals = require("../../models/terminals");

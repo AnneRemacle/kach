@@ -4,13 +4,13 @@ var _mongodb = require("./core/mongodb");
 
 var _express = require("./core/express");
 
-/* leny/kach
+/* ria/kach
  *
  * /src/server.js - main entry point
  *
- * coded by leny@flatLand!
- * started at 21/10/2016
- */
+ * Coded by Mucht - Mathieu Claessens
+ * started at 21/10/2015
+*/
 
 var APP_PORT = 12345;
 
