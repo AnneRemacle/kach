@@ -37,17 +37,19 @@ var _terminals = require("../routes/terminals");
 
 var _terminals2 = _interopRequireDefault(_terminals);
 
+var _pages = require("../routes/pages");
+
+var _pages2 = _interopRequireDefault(_pages);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* ria/kach
- *
- * /src/core/express.js - Express configuration
- *
- * Coded by Mucht - Mathieu Claessens
- * started at 21/10/2016
-*/
-
-var APP_PORT = "12345";
+var APP_PORT = "12345"; /* ria/kach
+                         *
+                         * /src/core/express.js - Express configuration
+                         *
+                         * Coded by Mucht - Mathieu Claessens
+                         * started at 21/10/2016
+                        */
 
 var oApp = void 0,
     fInit = void 0;
@@ -73,6 +75,7 @@ exports.init = fInit = function fInit() {
     oApp.use(_system2.default);
     oApp.use(_banks2.default);
     oApp.use(_terminals2.default);
+    oApp.use(_pages2.default);
 
     // Listening
     oApp.listen(iAppPort, function () {
