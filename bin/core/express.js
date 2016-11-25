@@ -71,6 +71,10 @@ exports.init = fInit = function fInit() {
         "extended": true
     }));
 
+    // configure templates
+    oApp.set("views", __dirname + "/../views");
+    oApp.set("view engine", "pug");
+
     // routes
     oApp.use(_system2.default);
     oApp.use(_banks2.default);
