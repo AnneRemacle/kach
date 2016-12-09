@@ -4,7 +4,6 @@ logs
 npm-debug.log*
 bin
 static/css
-bin/core
 
 # Runtime data
 pids
