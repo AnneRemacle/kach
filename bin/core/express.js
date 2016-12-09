@@ -71,6 +71,8 @@ exports.init = fInit = function fInit() {
         "extended": true
     }));
 
+    oApp.use(_express2.default.static(__dirname + "/../../static"));
+
     // configure templates
     oApp.set("views", __dirname + "/../views");
     oApp.set("view engine", "pug");
