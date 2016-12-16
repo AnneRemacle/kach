@@ -11,3 +11,5 @@ bin
 .vagrant
 static/css
 static/js
+.DS_Store
+static/DS_Store
